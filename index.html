@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Renovação 2026 — Escola Municipal José Pinto Pimenta — Anexo E.E. José Joaquim Lages</title>
+<style>
+  :root{
+    --bg:#f6f7fb;--fg:#1f2937;--muted:#6b7280;--brand:#2563eb;--ok:#16a34a;--warn:#dc2626;
+    --card:#fff;--radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08)
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  .wrap{max-width:880px;margin:auto;padding:18px}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  /* Cabeçalho textual */
+  .header{margin:-16px -16px 12px -16px;padding:16px 20px;border-radius:14px 14px 0 0;border-bottom:1px solid #e5e7eb;background:#fff}
+  .school-name{font-weight:800;font-size:18px;line-height:1.3;text-align:center}
+  .sub{margin-top:6px;text-align:center;color:#374151;font-weight:700}
+  .deadline{margin-top:2px;text-align:center;color:var(--muted);font-size:14px}
+  /* Títulos e layout */
+  h1{font-size:22px;margin:8px 0 2px}
+  .row{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:960px){.row{grid-template-columns:repeat(2,1fr)}}
+  label{font-size:13px;font-weight:600;margin-bottom:4px;display:block}
+  input,select,textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px;background:#fff}
+  input[readonly]{background:#f3f4f6}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  button{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer}
+  .primary{background:var(--brand);color:#fff}
+  .ghost{background:#eef2ff;color:#374151}
+  .ok{background:var(--ok);color:#fff}
+  .danger{background:var(--warn);color:#fff}
+  .helper{font-size:12px;color:var(--muted)}
+  .status{margin-top:10px;font-size:14px}
+  .status.loading{opacity:.75}
+  .hide{display:none !important}
+  .grid-1{display:grid;grid-template-columns:1fr;gap:12px}
+  .tag{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:999px;padding:4px 10px;font-size:12px}
+  .section-title{margin-top:8px;font-weight:700}
+  .contact-item{display:grid;grid-template-columns:1fr;gap:8px;background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px}
+  @media(min-width:960px){.contact-item{grid-template-columns:160px 1fr 1fr 120px}}
+  .contact-actions{display:flex;gap:8px;align-items:center}
+  .med-item{display:grid;grid-template-columns:1fr 120px;gap:8px;background:#fbfdff;border:1px dashed #c7d2fe;border-radius:12px;padding:12px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <!-- Cabeçalho textual -->
+      <div class="header">
+        <div class="school-name">Escola Municipal José Pinto Pimenta — Anexo E.E. José Joaquim Lages</div>
+        <div class="sub">Renovação 2026</div>
+        <div class="deadline">Prazo final: 21/11/2025 às 23:59</div>
+      </div>
+
+      <!-- CPF / Busca -->
+      <h1 style="margin-top:10px">Localizar cadastro</h1>
+      <div class="grid-1">
+        <div>
+          <label for="cpf">CPF para localizar cadastro</label>
+          <input id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14">
+          <div class="helper">Digite o CPF e clique em <b>Buscar</b>. Aceita com ou sem máscara.</div>
+          <div class="actions">
+            <button id="btnBuscar" class="primary">Buscar</button>
+            <button id="btnLimpar" class="ghost" type="button">Limpar</button>
+          </div>
+          <div id="status" class="status"></div>
+        </div>
+      </div>
+
+      <hr style="margin:16px 0;border:0;border-top:1px solid #eee">
+
+      <div id="blocoDados" class="hide">
+        <div style="margin-bottom:6px"><span class="tag" id="tagEncontrados">0 resultados</span></div>
+
+        <!-- 1) DADOS DO ALUNO -->
+        <div class="section-title">Dados do aluno</div>
+        <div class="row">
+          <div>
+            <label for="aluno">Nome do aluno</label>
+            <input id="aluno" type="text" readonly placeholder="Nome completo">
+          </div>
+          <div>
+            <label for="turma">Turma</label>
+            <input id="turma" type="text" readonly placeholder="Ex.: VERDE LIMA">
+          </div>
+        </div>
+
+        <!-- 2) ENDEREÇO (ViaCEP; apenas número e complemento editáveis) -->
+        <div class="section-title">Endereço</div>
+        <div class="row">
+          <div>
+            <label for="cep">CEP</label>
+            <input id="cep" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9">
+            <div class="helper" id="cepHelp">Digite o CEP (o ViaCEP preenche o restante). Edite apenas número e complemento.</div>
+          </div>
+          <div>
+            <label for="logradouro">Logradouro</label>
+            <input id="logradouro" type="text" readonly placeholder="Rua / Avenida">
+          </div>
+          <div>
+            <label for="numero">Número (editável)</label>
+            <input id="numero" type="text" inputmode="numeric" placeholder="123">
+          </div>
+          <div>
+            <label for="complemento">Complemento (editável)</label>
+            <input id="complemento" type="text" placeholder="Bloco, apto., casa">
+          </div>
+          <div>
+            <label for="bairro">Bairro</label>
+            <input id="bairro" type="text" readonly placeholder="Bairro">
+          </div>
+          <div>
+            <label for="cidade">Cidade</label>
+            <input id="cidade" type="text" readonly placeholder="Cidade">
+          </div>
+          <div>
+            <label for="uf">UF</label>
+            <input id="uf" type="text" readonly placeholder="MG">
+          </div>
+        </div>
+
+        <!-- 3) RESPONSÁVEL -->
+        <div class="section-title">Responsável pela renovação</div>
+        <div class="row">
+          <div>
+            <label for="respNome">Nome do responsável</label>
+            <input id="respNome" type="text" placeholder="Nome completo">
+          </div>
+          <div>
+            <label for="respCpf">CPF do responsável</label>
+            <input id="respCpf" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14">
+          </div>
+          <div>
+            <label for="respContato">Contato principal (telefone)</label>
+            <input id="respContato" type="text" inputmode="tel" placeholder="(31) 9xxxxxxxx">
+          </div>
+          <div>
+            <label for="respTemEmail">Tem e-mail?</label>
+            <select id="respTemEmail">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <label for="respEmail">E-mail do responsável</label>
+            <input id="respEmail" type="email" placeholder="exemplo@dominio.com" disabled>
+          </div>
+        </div>
+
+        <!-- 4) CONTATOS ADICIONAIS -->
+        <div class="section-title">Contatos adicionais</div>
+        <div id="contactsList" class="grid-1" style="margin-bottom:8px"></div>
+        <div class="actions">
+          <button id="btnAddContact" type="button" class="ghost">+ Adicionar contato</button>
+        </div>
+        <div class="helper">Somente números (DDD + número). Tipos: Telefone ou WhatsApp.</div>
+
+        <!-- 5) BENEFÍCIOS SOCIAIS -->
+        <div class="section-title">Benefícios sociais</div>
+        <div class="row">
+          <div>
+            <label for="bolsaFamilia">Recebe Bolsa Família?</label>
+            <select id="bolsaFamilia">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+          <div>
+            <label for="nis">NIS (11 dígitos)</label>
+            <input id="nis" type="text" inputmode="numeric" maxlength="11" placeholder="Somente números" disabled>
+            <div class="helper">Obrigatório apenas se “Sim”.</div>
+          </div>
+        </div>
+
+        <!-- 6) TRANSPORTE ESCOLAR -->
+        <div class="section-title">Transporte escolar</div>
+        <div class="row">
+          <div>
+            <label for="usaTransporte">Utiliza transporte escolar?</label>
+            <select id="usaTransporte">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+          <div>
+            <label for="nomeTransporte">Nome do transporte</label>
+            <input id="nomeTransporte" type="text" placeholder="Ex.: Transporte da Sra. Maria" disabled>
+            <div class="helper">Obrigatório apenas se “Sim”.</div>
+          </div>
+        </div>
+
+        <!-- 7) SAÚDE -->
+        <div class="section-title">Saúde</div>
+        <div class="row">
+          <div>
+            <label for="temAlergia">Possui alergias?</label>
+            <select id="temAlergia">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <label for="alergiaDesc">Descreva as alergias (se houver)</label>
+            <textarea id="alergiaDesc" rows="2" placeholder="Ex.: alergia a penicilina, picada de inseto, etc." disabled></textarea>
+          </div>
+
+          <div>
+            <label for="temIntolerancia">Intolerância alimentar?</label>
+            <select id="temIntolerancia">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <label for="intoleranciaDesc">Descreva a intolerância (se houver)</label>
+            <textarea id="intoleranciaDesc" rows="2" placeholder="Ex.: lactose, glúten, ovo..." disabled></textarea>
+          </div>
+
+          <div>
+            <label for="usaMedic">Faz uso de medicamentos?</label>
+            <select id="usaMedic">
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Repetidor de medicamentos (apenas nome) -->
+        <div id="medicWrap" class="hide">
+          <div id="medList" class="grid-1" style="margin-bottom:8px"></div>
+          <div class="actions">
+            <button id="btnAddMed" type="button" class="ghost">+ Adicionar medicamento</button>
+          </div>
+          <div class="helper">Informe apenas o <b>nome do medicamento</b>. Você pode adicionar vários.</div>
+        </div>
+
+        <!-- 8) OBSERVAÇÕES -->
+        <div class="section-title">Observações (opcional)</div>
+        <div class="row">
+          <div style="grid-column:1/-1">
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes" rows="3" placeholder="Informações relevantes ao cadastro"></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btnEnviar" class="ok">Enviar renovação</button>
+          <button id="btnCancelar" class="danger" type="button">Cancelar</button>
+        </div>
+        <div id="statusEnvio" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ====== CONFIG ======
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzp17iEckpnlaQYybQsrPP7fskd_GC6p3Dth8O4MPRYca4rALZBfsJ6tJMYPsPim9Vwbw/exec";
+  const SUBMIT_URL = ""; // POST JSON (opcional)
+  const MAP = {
+    CPF:["CPF","Cpf","cpf","DOCUMENTO","Documento","doc"],
+    ALUNO:["ALUNO","Aluno","NOME","Nome do aluno","NOME DO ALUNO"],
+    TURMA:["TURMA","Turma"],
+    TEL1:["TELEFONE","TELEFONE 1","Telefone","FONE","Contato 1"],
+    TEL2:["TELEFONE 2","Contato 2","Telefone2"]
+  };
+
+  const $ = s => document.querySelector(s);
+  const onlyDigits = s => (s||"").toString().replace(/\D/g,"");
+  const maskCPF = s => {
+    const d = onlyDigits(s).slice(0,11);
+    return d.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*$/, (m,a,b,c,dv)=> dv?`${a}.${b}.${c}-${dv}`: (c?`${a}.${b}.${c}`:(b?`${a}.${b}`:a)));
+  };
+  const maskCEP = s => {
+    const d = onlyDigits(s).slice(0,8);
+    return d.length>5 ? d.slice(0,5)+"-"+d.slice(5) : d;
+  };
+
+  let cache=null, record=null;
+  let contacts=[]; // {tipo:'Telefone'|'WhatsApp', valor:'', obs:''}
+  let meds=[];     // array de strings (nomes)
+
+  // DOM refs
+  const cpfInput=$("#cpf"), btnBuscar=$("#btnBuscar"), btnLimpar=$("#btnLimpar");
+  const status=$("#status"), bloco=$("#blocoDados"), tagEncontrados=$("#tagEncontrados");
+  const btnCancelar=$("#btnCancelar"), btnEnviar=$("#btnEnviar"), statusEnvio=$("#statusEnvio");
+  const contactsList=$("#contactsList"), btnAddContact=$("#btnAddContact");
+  const medWrap=$("#medicWrap"), medList=$("#medList"), btnAddMed=$("#btnAddMed");
+
+  const f={
+    aluno:$("#aluno"), turma:$("#turma"),
+    // endereço
+    cep:$("#cep"), logradouro:$("#logradouro"), numero:$("#numero"),
+    complemento:$("#complemento"), bairro:$("#bairro"), cidade:$("#cidade"), uf:$("#uf"),
+    // responsável
+    respNome:$("#respNome"), respCpf:$("#respCpf"), respContato:$("#respContato"),
+    respTemEmail:$("#respTemEmail"), respEmail:$("#respEmail"),
+    // benefícios
+    bolsaFamilia:$("#bolsaFamilia"), nis:$("#nis"),
+    // transporte
+    usaTransporte:$("#usaTransporte"), nomeTransporte:$("#nomeTransporte"),
+    // saúde
+    temAlergia:$("#temAlergia"), alergiaDesc:$("#alergiaDesc"),
+    temIntolerancia:$("#temIntolerancia"), intoleranciaDesc:$("#intoleranciaDesc"),
+    usaMedic:$("#usaMedic"),
+    // outras
+    observacoes:$("#observacoes")
+  };
+
+  // Máscaras / interações
+  cpfInput.addEventListener("input",()=>{ cpfInput.value=maskCPF(cpfInput.value); if(onlyDigits(cpfInput.value).length===11) doBuscar(); });
+  f.respCpf.addEventListener("input",()=> f.respCpf.value=maskCPF(f.respCpf.value));
+  f.respTemEmail.addEventListener("change",()=>{ const en=f.respTemEmail.value==="sim"; f.respEmail.disabled=!en; if(!en) f.respEmail.value=""; });
+
+  // CEP + ViaCEP
+  f.cep.addEventListener("input",()=>{ f.cep.value=maskCEP(f.cep.value); const d=onlyDigits(f.cep.value); if(d.length===8) lookupViaCEP(d); });
+
+  // Benefícios: NIS
+  f.bolsaFamilia.addEventListener("change",()=>{
+    const sim = f.bolsaFamilia.value==="sim";
+    f.nis.disabled = !sim;
+    if(!sim) f.nis.value="";
+  });
+  f.nis.addEventListener("input",()=>{ f.nis.value = onlyDigits(f.nis.value).slice(0,11); });
+
+  // Transporte
+  f.usaTransporte.addEventListener("change", () => {
+    const sim = f.usaTransporte.value === "sim";
+    f.nomeTransporte.disabled = !sim;
+    if (!sim) f.nomeTransporte.value = "";
+  });
+
+  // Saúde
+  f.temAlergia.addEventListener("change",()=>{ const en=f.temAlergia.value==="sim"; f.alergiaDesc.disabled=!en; if(!en) f.alergiaDesc.value=""; });
+  f.temIntolerancia.addEventListener("change",()=>{ const en=f.temIntolerancia.value==="sim"; f.intoleranciaDesc.disabled=!en; if(!en) f.intoleranciaDesc.value=""; });
+  f.usaMedic.addEventListener("change",()=>{ const en=f.usaMedic.value==="sim"; medWrap.classList.toggle("hide",!en); if(!en){ meds=[]; renderMeds(); } });
+
+  // Contatos adicionais (só números)
+  btnAddContact.addEventListener("click",()=> addContact({tipo:"Telefone",valor:"",obs:""}));
+  function addContact(c){ contacts.push(c); renderContacts(); }
+  function removeContact(i){ contacts.splice(i,1); renderContacts(); }
+  function enforceDigits(el){ const v=onlyDigits(el.value); if(el.value!==v) el.value=v; }
+  function renderContacts(){
+    contactsList.innerHTML="";
+    contacts.forEach((c,i)=>{
+      const div=document.createElement("div"); div.className="contact-item";
+      div.innerHTML=`
+        <div><label>Tipo</label>
+          <select data-k="tipo" data-i="${i}">
+            <option ${c.tipo==="Telefone"?"selected":""}>Telefone</option>
+            <option ${c.tipo==="WhatsApp"?"selected":""}>WhatsApp</option>
+          </select>
+        </div>
+        <div><label>Valor (apenas números)</label>
+          <input data-k="valor" data-i="${i}" type="text" inputmode="numeric" maxlength="15" placeholder="DDD + número" value="${c.valor||""}">
+        </div>
+        <div><label>Observação</label>
+          <input data-k="obs" data-i="${i}" type="text" placeholder="Ex.: mãe, pai, tio, horário" value="${c.obs||""}">
+        </div>
+        <div class="contact-actions">
+          <button type="button" class="danger" data-act="rm" data-i="${i}">Remover</button>
+        </div>`;
+      contactsList.appendChild(div);
+    });
+    contactsList.querySelectorAll("select").forEach(el=>{
+      el.addEventListener("input",ev=>{ const idx=+ev.target.dataset.i; contacts[idx].tipo=ev.target.value; });
+    });
+    contactsList.querySelectorAll("input[data-k='valor']").forEach(el=>{
+      el.addEventListener("input",ev=>{ enforceDigits(ev.target); const idx=+ev.target.dataset.i; contacts[idx].valor=ev.target.value; });
+    });
+    contactsList.querySelectorAll("input[data-k='obs']").forEach(el=>{
+      el.addEventListener("input",ev=>{ const idx=+ev.target.dataset.i; contacts[idx].obs=ev.target.value; });
+    });
+    contactsList.querySelectorAll("[data-act='rm']").forEach(btn=>{
+      btn.addEventListener("click",ev=>{ const idx=+ev.target.dataset.i; removeContact(idx); });
+    });
+  }
+
+  // Medicamentos
+  btnAddMed.addEventListener("click",()=> addMed(""));
+  function addMed(name){ meds.push(name); renderMeds(); }
+  function removeMed(i){ meds.splice(i,1); renderMeds(); }
+  function renderMeds(){
+    medList.innerHTML="";
+    meds.forEach((name,i)=>{
+      const div=document.createElement("div"); div.className="med-item";
+      div.innerHTML=`
+        <div>
+          <label>Nome do medicamento</label>
+          <input data-i="${i}" type="text" placeholder="Ex.: Dipirona" value="${name||""}">
+        </div>
+        <div class="contact-actions" style="align-self:end">
+          <button type="button" class="danger" data-act="rmmed" data-i="${i}">Remover</button>
+        </div>`;
+      medList.appendChild(div);
+    });
+    medList.querySelectorAll("input").forEach(el=>{
+      el.addEventListener("input",ev=>{
+        const idx=+ev.target.dataset.i; meds[idx]=ev.target.value;
+      });
+    });
+    medList.querySelectorAll("[data-act='rmmed']").forEach(btn=>{
+      btn.addEventListener("click",ev=>{ const idx=+ev.target.dataset.i; removeMed(idx); });
+    });
+  }
+
+  async function lookupViaCEP(cepDigits){
+    const help=$("#cepHelp"); help.textContent="Consultando ViaCEP...";
+    try{
+      const resp=await fetch(`https://viacep.com.br/ws/${cepDigits}/json/`);
+      if(!resp.ok) throw new Error("ViaCEP indisponível.");
+      const data=await resp.json();
+      if(data.erro){ help.textContent="CEP não encontrado."; return; }
+      $("#logradouro").value=data.logradouro||""; $("#bairro").value=data.bairro||"";
+      $("#cidade").value=data.localidade||""; $("#uf").value=(data.uf||"");
+      if(!$("#complemento").value && data.complemento) $("#complemento").value=data.complemento;
+      help.textContent="Endereço preenchido. Edite apenas número e complemento se necessário.";
+      $("#numero").focus();
+    }catch(e){ help.textContent="Erro ao consultar ViaCEP."; console.error(e); }
+  }
+
+  // Base (sua API)
+  async function getData(){
+    if(cache) return cache;
+    const resp=await fetch(ENDPOINT,{cache:"no-store"});
+    if(!resp.ok) throw new Error("Falha ao acessar a API: "+resp.status);
+    const json=await resp.json();
+    let arr=[];
+    if(Array.isArray(json?.data)) arr=json.data;
+    else if(Array.isArray(json?.rows)) arr=json.rows;
+    else if(Array.isArray(json)) arr=json;
+    else { for(const k of Object.keys(json||{})) if(Array.isArray(json[k])){ arr=json[k]; break; } }
+    if(!Array.isArray(arr)) throw new Error("Formato inesperado de dados.");
+    cache=arr; return arr;
+  }
+  function pickField(obj,keys){
+    for(const k of Object.keys(obj)){
+      for(const a of keys){
+        if(k.trim().toLowerCase()===a.trim().toLowerCase()) return obj[k];
+      }
+    }
+    return null;
+  }
+
+  async function doBuscar(){
+    const digits=onlyDigits(cpfInput.value);
+    if(digits.length<8){ status.textContent="Digite ao menos 8 dígitos do CPF (ideal: 11)."; bloco.classList.add("hide"); return; }
+    status.textContent="Buscando..."; status.classList.add("loading"); bloco.classList.add("hide"); statusEnvio.textContent="";
+    try{
+      const arr=await getData();
+      const hits=arr.filter(row=>{
+        const v=pickField(row,MAP.CPF) ?? Object.values(row).find(x=>onlyDigits(String(x))===digits);
+        return v && onlyDigits(String(v))===digits;
+      });
+      if(hits.length===0){ status.textContent="CPF não encontrado."; return; }
+      record=hits[0];
+      tagEncontrados.textContent=hits.length===1?"1 resultado":`${hits.length} resultados (mostrando o 1º)`;
+      preencherFormulario(record); bloco.classList.remove("hide");
+      status.textContent="Dados carregados. Revise e complete.";
+    }catch(e){ console.error(e); status.textContent="Erro: "+e.message; }
+    finally{ status.classList.remove("loading"); }
+  }
+
+  function preencherFormulario(row){
+    const v=keys=>pickField(row,keys);
+    $("#aluno").value=v(MAP.ALUNO) ?? "";
+    $("#turma").value=v(MAP.TURMA) ?? "";
+
+    // contatos da base (só números)
+    contacts=[];
+    const tel1=(v(MAP.TEL1) ?? "").toString(), tel2=(v(MAP.TEL2) ?? "").toString();
+    const push=(s)=>{ const parts=s.includes("/")?s.split("/"):[s]; parts.map(p=>onlyDigits(p)).filter(Boolean).forEach(d=>contacts.push({tipo:"Telefone",valor:d,obs:""})); };
+    if(tel1) push(tel1); if(tel2) push(tel2); renderContacts();
+
+    // zera seções condicionais
+    f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
+    f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
+    f.temAlergia.value="nao"; f.alergiaDesc.value=""; f.alergiaDesc.disabled=true;
+    f.temIntolerancia.value="nao"; f.intoleranciaDesc.value=""; f.intoleranciaDesc.disabled=true;
+    f.usaMedic.value="nao"; meds=[]; renderMeds(); medWrap.classList.add("hide");
+  }
+
+  btnBuscar.addEventListener("click",doBuscar);
+  btnLimpar.addEventListener("click",()=>{ 
+    cpfInput.value=""; status.textContent=""; bloco.classList.add("hide"); record=null;
+    contacts=[]; meds=[]; renderContacts(); renderMeds();
+    f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
+    f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
+  });
+  btnCancelar.addEventListener("click",()=>{ 
+    bloco.classList.add("hide"); statusEnvio.textContent=""; record=null;
+    contacts=[]; meds=[]; renderContacts(); renderMeds();
+    f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
+    f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
+  });
+
+  btnEnviar.addEventListener("click",async ()=>{
+    statusEnvio.textContent="";
+    const respCpfDigits=onlyDigits($("#respCpf").value);
+
+    // validações
+    if(!$("#respNome").value.trim()) return statusEnvio.textContent="Informe o nome do responsável pela renovação.";
+    if(respCpfDigits.length!==11) return statusEnvio.textContent="CPF do responsável inválido (11 dígitos).";
+    if(!$("#respContato").value.trim()) return statusEnvio.textContent="Informe um contato principal do responsável.";
+    if(!$("#aluno").value.trim()) return statusEnvio.textContent="Aluno não localizado na base.";
+    if(!onlyDigits($("#cep").value) || onlyDigits($("#cep").value).length!==8) return statusEnvio.textContent="CEP inválido (8 dígitos).";
+    if(!$("#logradouro").value.trim() || !$("#bairro").value.trim() || !$("#cidade").value.trim() || !$("#uf").value.trim()) return statusEnvio.textContent="Complete o endereço (logradouro, bairro, cidade, UF).";
+    // Benefícios
+    if($("#bolsaFamilia").value==="sim"){
+      const nisD=onlyDigits($("#nis").value);
+      if(nisD.length!==11) return statusEnvio.textContent="Informe um NIS válido com 11 dígitos.";
+    }
+    // Transporte
+    if(f.usaTransporte.value==="sim" && !f.nomeTransporte.value.trim()) return statusEnvio.textContent="Informe o nome do transporte escolar.";
+    // Saúde mínimos
+    if($("#temAlergia").value==="sim" && !$("#alergiaDesc").value.trim()) return statusEnvio.textContent="Descreva as alergias.";
+    if($("#temIntolerancia").value==="sim" && !$("#intoleranciaDesc").value.trim()) return statusEnvio.textContent="Descreva a intolerância alimentar.";
+    if($("#usaMedic").value==="sim" && meds.filter(n=>n.trim()).length===0) return statusEnvio.textContent="Informe ao menos um medicamento.";
+
+    const contactsClean=contacts.map(c=>({tipo:(c.tipo||"").trim(), valor: onlyDigits(c.valor||""), obs:(c.obs||"").trim()})).filter(c=>c.valor);
+    const medsClean=meds.map(n=>n.trim()).filter(Boolean);
+
+    const payload={
+      cpf_consulta:onlyDigits(cpfInput.value),
+      aluno:$("#aluno").value.trim(),
+      turma:$("#turma").value.trim(),
+      endereco:{
+        cep:onlyDigits($("#cep").value),
+        logradouro:$("#logradouro").value.trim(),
+        numero:$("#numero").value.trim(),
+        complemento:$("#complemento").value.trim(),
+        bairro:$("#bairro").value.trim(),
+        cidade:$("#cidade").value.trim(),
+        uf:$("#uf").value.trim().toUpperCase()
+      },
+      responsavel_renovacao:{
+        nome:$("#respNome").value.trim(),
+        cpf:respCpfDigits,
+        contato_principal:$("#respContato").value.trim(),
+        tem_email:$("#respTemEmail").value==="sim",
+        email:$("#respTemEmail").value==="sim" ? $("#respEmail").value.trim() : ""
+      },
+      contatos_adicionais:contactsClean,
+      beneficios:{
+        bolsa_familia:{
+          recebe: $("#bolsaFamilia").value==="sim",
+          nis: $("#bolsaFamilia").value==="sim" ? onlyDigits($("#nis").value) : ""
+        }
+      },
+      transporte_escolar:{
+        utiliza: f.usaTransporte.value==="sim",
+        nome: f.usaTransporte.value==="sim" ? f.nomeTransporte.value.trim() : ""
+      },
+      saude:{
+        alergias:{ tem: $("#temAlergia").value==="sim", detalhes: $("#alergiaDesc").value.trim() },
+        intolerancia_alimentar:{ tem: $("#temIntolerancia").value==="sim", detalhes: $("#intoleranciaDesc").value.trim() },
+        medicamentos:{ usa: $("#usaMedic").value==="sim", lista: medsClean }
+      },
+      observacoes:$("#observacoes").value.trim(),
+      timestamp:new Date().toISOString()
+    };
+
+    if(!SUBMIT_URL){
+      console.log("Payload de renovação:",payload);
+      statusEnvio.textContent="Pré-visualização concluída (sem envio configurado). Defina SUBMIT_URL para registrar.";
+      return;
+    }
+    try{
+      statusEnvio.textContent="Enviando...";
+      const r=await fetch(SUBMIT_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+      if(!r.ok) throw new Error("Falha no envio: "+r.status);
+      await r.json().catch(()=> ({}));
+      statusEnvio.textContent="Renovação registrada com sucesso.";
+    }catch(e){ console.error(e); statusEnvio.textContent="Erro no envio: "+e.message; }
+  });
+
+  // Suporte a ?cpf=
+  (function initFromQuery(){
+    const u=new URL(location.href); const qcpf=u.searchParams.get("cpf");
+    if(qcpf){ cpfInput.value=maskCPF(qcpf); if(onlyDigits(qcpf).length>=8) doBuscar(); }
+  })();
+</script>
+</body>
+</html>
