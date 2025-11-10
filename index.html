@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
 <title>Renovação 2026 — Escola Municipal José Pinto Pimenta — Anexo E.E. José Joaquim Lages</title>
 <style>
   :root{
     --bg:#f6f7fb;--fg:#1f2937;--muted:#6b7280;--brand:#2563eb;--ok:#16a34a;--warn:#dc2626;
-    --card:#fff;--radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08)
+    --card:#fff;--radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08);
+    --pad:16px; --pad-sm:12px;
+    --safe-b:env(safe-area-inset-bottom,0px);
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-  .wrap{max-width:880px;margin:auto;padding:18px}
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-  /* Cabeçalho textual */
-  .header{margin:-16px -16px 12px -16px;padding:16px 20px;border-radius:14px 14px 0 0;border-bottom:1px solid #e5e7eb;background:#fff}
+  *{box-sizing:border-box;-webkit-tap-highlight-color: transparent}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:880px;margin:auto;padding:var(--pad)}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:var(--pad)}
+  .header{
+    margin:calc(-1 * var(--pad)) calc(-1 * var(--pad)) var(--pad-sm) calc(-1 * var(--pad));
+    padding:16px 20px;border-radius:14px 14px 0 0;border-bottom:1px solid #e5e7eb;background:#fff; position:sticky; top:0; z-index:5;
+  }
   .school-name{font-weight:800;font-size:18px;line-height:1.3;text-align:center}
   .sub{margin-top:6px;text-align:center;color:#374151;font-weight:700}
   .deadline{margin-top:2px;text-align:center;color:var(--muted);font-size:14px}
-  /* Títulos e layout */
   h1{font-size:22px;margin:8px 0 2px}
   .row{display:grid;grid-template-columns:1fr;gap:12px}
   @media(min-width:960px){.row{grid-template-columns:repeat(2,1fr)}}
-  label{font-size:13px;font-weight:600;margin-bottom:4px;display:block}
-  input,select,textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px;background:#fff}
+  label{font-size:14px;font-weight:600;margin-bottom:4px;display:block}
+  input,select,textarea{
+    width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:10px;
+    font-size:16px; /* evita zoom no iOS */
+    background:#fff; line-height:1.2; min-height:44px;
+  }
   input[readonly]{background:#f3f4f6}
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  button{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer}
+  .actions > *{min-height:44px}
+  button{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-size:16px;cursor:pointer}
   .primary{background:var(--brand);color:#fff}
   .ghost{background:#eef2ff;color:#374151}
   .ok{background:var(--ok);color:#fff}
@@ -37,29 +52,46 @@
   .grid-1{display:grid;grid-template-columns:1fr;gap:12px}
   .tag{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:999px;padding:4px 10px;font-size:12px}
   .section-title{margin-top:8px;font-weight:700}
-  .contact-item{display:grid;grid-template-columns:1fr;gap:8px;background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px}
+  .contact-item{
+    display:grid;grid-template-columns:1fr;gap:8px;background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px
+  }
   @media(min-width:960px){.contact-item{grid-template-columns:160px 1fr 1fr 120px}}
   .contact-actions{display:flex;gap:8px;align-items:center}
   .med-item{display:grid;grid-template-columns:1fr 120px;gap:8px;background:#fbfdff;border:1px dashed #c7d2fe;border-radius:12px;padding:12px}
+
+  /* Mobile-first refinements */
+  @media(max-width:959px){
+    .wrap{padding:12px}
+    .card{padding:12px}
+    .actions > button{flex:1 1 100%}          /* botões full width no mobile */
+    .contact-item{grid-template-columns:1fr}  /* contatos empilhados */
+  }
+
+  /* Barra de ações fixa no mobile */
+  .sticky-actions{
+    position:sticky; bottom:0; left:0; right:0; z-index:10;
+    padding:10px 0 calc(10px + var(--safe-b));
+    background:linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 35%);
+    margin:8px -4px -8px -4px;
+  }
+  .sticky-actions .actions{margin:0}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- Cabeçalho textual -->
       <div class="header">
         <div class="school-name">Escola Municipal José Pinto Pimenta — Anexo E.E. José Joaquim Lages</div>
         <div class="sub">Renovação 2026</div>
         <div class="deadline">Prazo final: 21/11/2025 às 23:59</div>
       </div>
 
-      <!-- CPF / Busca -->
       <h1 style="margin-top:10px">Localizar cadastro</h1>
       <div class="grid-1">
         <div>
           <label for="cpf">CPF para localizar cadastro</label>
-          <input id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14">
-          <div class="helper">Digite o CPF e clique em <b>Buscar</b>. Aceita com ou sem máscara.</div>
+          <input id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" enterkeyhint="search">
+          <div class="helper">Digite o CPF e toque em <b>Buscar</b>. Aceita com ou sem máscara.</div>
           <div class="actions">
             <button id="btnBuscar" class="primary">Buscar</button>
             <button id="btnLimpar" class="ghost" type="button">Limpar</button>
@@ -78,45 +110,45 @@
         <div class="row">
           <div>
             <label for="aluno">Nome do aluno</label>
-            <input id="aluno" type="text" readonly placeholder="Nome completo">
+            <input id="aluno" type="text" readonly placeholder="Nome completo" autocomplete="name">
           </div>
           <div>
             <label for="turma">Turma</label>
-            <input id="turma" type="text" readonly placeholder="Ex.: VERDE LIMA">
+            <input id="turma" type="text" readonly placeholder="Ex.: VERDE LIMA" autocomplete="off">
           </div>
         </div>
 
-        <!-- 2) ENDEREÇO (ViaCEP; apenas número e complemento editáveis) -->
+        <!-- 2) ENDEREÇO -->
         <div class="section-title">Endereço</div>
         <div class="row">
           <div>
             <label for="cep">CEP</label>
-            <input id="cep" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9">
-            <div class="helper" id="cepHelp">Digite o CEP (o ViaCEP preenche o restante). Edite apenas número e complemento.</div>
+            <input id="cep" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9" autocomplete="postal-code">
+            <div class="helper" id="cepHelp">Digite o CEP — o ViaCEP preenche o restante.</div>
           </div>
           <div>
             <label for="logradouro">Logradouro</label>
-            <input id="logradouro" type="text" readonly placeholder="Rua / Avenida">
+            <input id="logradouro" type="text" readonly placeholder="Rua / Avenida" autocomplete="address-line1">
           </div>
           <div>
             <label for="numero">Número (editável)</label>
-            <input id="numero" type="text" inputmode="numeric" placeholder="123">
+            <input id="numero" type="text" inputmode="numeric" placeholder="123" autocomplete="address-line2">
           </div>
           <div>
             <label for="complemento">Complemento (editável)</label>
-            <input id="complemento" type="text" placeholder="Bloco, apto., casa">
+            <input id="complemento" type="text" placeholder="Bloco, apto., casa" autocomplete="address-line2">
           </div>
           <div>
             <label for="bairro">Bairro</label>
-            <input id="bairro" type="text" readonly placeholder="Bairro">
+            <input id="bairro" type="text" readonly placeholder="Bairro" autocomplete="address-level3">
           </div>
           <div>
             <label for="cidade">Cidade</label>
-            <input id="cidade" type="text" readonly placeholder="Cidade">
+            <input id="cidade" type="text" readonly placeholder="Cidade" autocomplete="address-level2">
           </div>
           <div>
             <label for="uf">UF</label>
-            <input id="uf" type="text" readonly placeholder="MG">
+            <input id="uf" type="text" readonly placeholder="MG" autocomplete="address-level1">
           </div>
         </div>
 
@@ -125,15 +157,15 @@
         <div class="row">
           <div>
             <label for="respNome">Nome do responsável</label>
-            <input id="respNome" type="text" placeholder="Nome completo">
+            <input id="respNome" type="text" placeholder="Nome completo" autocomplete="name">
           </div>
           <div>
             <label for="respCpf">CPF do responsável</label>
-            <input id="respCpf" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14">
+            <input id="respCpf" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
           </div>
           <div>
             <label for="respContato">Contato principal (telefone)</label>
-            <input id="respContato" type="text" inputmode="tel" placeholder="(31) 9xxxxxxxx">
+            <input id="respContato" type="tel" inputmode="tel" placeholder="(31) 9xxxxxxxx" autocomplete="tel-national">
           </div>
           <div>
             <label for="respTemEmail">Tem e-mail?</label>
@@ -144,7 +176,7 @@
           </div>
           <div style="grid-column:1/-1">
             <label for="respEmail">E-mail do responsável</label>
-            <input id="respEmail" type="email" placeholder="exemplo@dominio.com" disabled>
+            <input id="respEmail" type="email" placeholder="exemplo@dominio.com" disabled autocapitalize="none" autocomplete="email" inputmode="email">
           </div>
         </div>
 
@@ -168,8 +200,8 @@
           </div>
           <div>
             <label for="nis">NIS (11 dígitos)</label>
-            <input id="nis" type="text" inputmode="numeric" maxlength="11" placeholder="Somente números" disabled>
-            <div class="helper">Obrigatório apenas se “Sim”.</div>
+            <input id="nis" type="text" inputmode="numeric" maxlength="11" placeholder="Somente números" disabled autocomplete="off">
+            <div class="helper">Obrigatório somente se “Sim”.</div>
           </div>
         </div>
 
@@ -185,8 +217,8 @@
           </div>
           <div>
             <label for="nomeTransporte">Nome do transporte</label>
-            <input id="nomeTransporte" type="text" placeholder="Ex.: Transporte da Sra. Maria" disabled>
-            <div class="helper">Obrigatório apenas se “Sim”.</div>
+            <input id="nomeTransporte" type="text" placeholder="Ex.: Transporte da Sra. Maria" disabled autocomplete="organization">
+            <div class="helper">Obrigatório somente se “Sim”.</div>
           </div>
         </div>
 
@@ -226,7 +258,6 @@
           </div>
         </div>
 
-        <!-- Repetidor de medicamentos (apenas nome) -->
         <div id="medicWrap" class="hide">
           <div id="medList" class="grid-1" style="margin-bottom:8px"></div>
           <div class="actions">
@@ -244,11 +275,14 @@
           </div>
         </div>
 
-        <div class="actions">
-          <button id="btnEnviar" class="ok">Enviar renovação</button>
-          <button id="btnCancelar" class="danger" type="button">Cancelar</button>
+        <!-- BARRA FIXA DE AÇÕES NO MOBILE -->
+        <div class="sticky-actions">
+          <div class="actions">
+            <button id="btnEnviar" class="ok">Enviar renovação</button>
+            <button id="btnCancelar" class="danger" type="button">Cancelar</button>
+          </div>
+          <div id="statusEnvio" class="status"></div>
         </div>
-        <div id="statusEnvio" class="status"></div>
       </div>
     </div>
   </div>
@@ -256,7 +290,7 @@
 <script>
   // ====== CONFIG ======
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzp17iEckpnlaQYybQsrPP7fskd_GC6p3Dth8O4MPRYca4rALZBfsJ6tJMYPsPim9Vwbw/exec";
-  const SUBMIT_URL = ""; // POST JSON (opcional)
+  const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbzr5D28BM_-w6YvNOh4_6W9o_raQo_zxoTkEUxqeekBw3LyK2yXBjHcYuk3H8KZtY_o/exec"; // /exec
   const MAP = {
     CPF:["CPF","Cpf","cpf","DOCUMENTO","Documento","doc"],
     ALUNO:["ALUNO","Aluno","NOME","Nome do aluno","NOME DO ALUNO"],
@@ -277,10 +311,8 @@
   };
 
   let cache=null, record=null;
-  let contacts=[]; // {tipo:'Telefone'|'WhatsApp', valor:'', obs:''}
-  let meds=[];     // array de strings (nomes)
+  let contacts=[]; let meds=[];
 
-  // DOM refs
   const cpfInput=$("#cpf"), btnBuscar=$("#btnBuscar"), btnLimpar=$("#btnLimpar");
   const status=$("#status"), bloco=$("#blocoDados"), tagEncontrados=$("#tagEncontrados");
   const btnCancelar=$("#btnCancelar"), btnEnviar=$("#btnEnviar"), statusEnvio=$("#statusEnvio");
@@ -289,53 +321,50 @@
 
   const f={
     aluno:$("#aluno"), turma:$("#turma"),
-    // endereço
     cep:$("#cep"), logradouro:$("#logradouro"), numero:$("#numero"),
     complemento:$("#complemento"), bairro:$("#bairro"), cidade:$("#cidade"), uf:$("#uf"),
-    // responsável
     respNome:$("#respNome"), respCpf:$("#respCpf"), respContato:$("#respContato"),
     respTemEmail:$("#respTemEmail"), respEmail:$("#respEmail"),
-    // benefícios
     bolsaFamilia:$("#bolsaFamilia"), nis:$("#nis"),
-    // transporte
     usaTransporte:$("#usaTransporte"), nomeTransporte:$("#nomeTransporte"),
-    // saúde
     temAlergia:$("#temAlergia"), alergiaDesc:$("#alergiaDesc"),
     temIntolerancia:$("#temIntolerancia"), intoleranciaDesc:$("#intoleranciaDesc"),
     usaMedic:$("#usaMedic"),
-    // outras
     observacoes:$("#observacoes")
   };
 
-  // Máscaras / interações
+  // ===== Acessibilidade Mobile =====
+  // rolar até o campo focado (útil quando teclado cobre o input)
+  const focusables = ['input','select','textarea'];
+  focusables.forEach(tag=>{
+    document.addEventListener('focusin',(ev)=>{
+      if(ev.target.matches(tag)){
+        setTimeout(()=>{ ev.target.scrollIntoView({block:'center', behavior:'smooth'}); }, 100);
+      }
+    });
+  });
+
+  // ===== Máscaras e interações
   cpfInput.addEventListener("input",()=>{ cpfInput.value=maskCPF(cpfInput.value); if(onlyDigits(cpfInput.value).length===11) doBuscar(); });
   f.respCpf.addEventListener("input",()=> f.respCpf.value=maskCPF(f.respCpf.value));
   f.respTemEmail.addEventListener("change",()=>{ const en=f.respTemEmail.value==="sim"; f.respEmail.disabled=!en; if(!en) f.respEmail.value=""; });
 
-  // CEP + ViaCEP
+  // ViaCEP
   f.cep.addEventListener("input",()=>{ f.cep.value=maskCEP(f.cep.value); const d=onlyDigits(f.cep.value); if(d.length===8) lookupViaCEP(d); });
 
-  // Benefícios: NIS
-  f.bolsaFamilia.addEventListener("change",()=>{
-    const sim = f.bolsaFamilia.value==="sim";
-    f.nis.disabled = !sim;
-    if(!sim) f.nis.value="";
-  });
+  // Bolsa Família
+  f.bolsaFamilia.addEventListener("change",()=>{ const sim=f.bolsaFamilia.value==="sim"; f.nis.disabled=!sim; if(!sim) f.nis.value=""; });
   f.nis.addEventListener("input",()=>{ f.nis.value = onlyDigits(f.nis.value).slice(0,11); });
 
   // Transporte
-  f.usaTransporte.addEventListener("change", () => {
-    const sim = f.usaTransporte.value === "sim";
-    f.nomeTransporte.disabled = !sim;
-    if (!sim) f.nomeTransporte.value = "";
-  });
+  f.usaTransporte.addEventListener("change",()=>{ const sim=f.usaTransporte.value==="sim"; f.nomeTransporte.disabled=!sim; if(!sim) f.nomeTransporte.value=""; });
 
   // Saúde
   f.temAlergia.addEventListener("change",()=>{ const en=f.temAlergia.value==="sim"; f.alergiaDesc.disabled=!en; if(!en) f.alergiaDesc.value=""; });
   f.temIntolerancia.addEventListener("change",()=>{ const en=f.temIntolerancia.value==="sim"; f.intoleranciaDesc.disabled=!en; if(!en) f.intoleranciaDesc.value=""; });
   f.usaMedic.addEventListener("change",()=>{ const en=f.usaMedic.value==="sim"; medWrap.classList.toggle("hide",!en); if(!en){ meds=[]; renderMeds(); } });
 
-  // Contatos adicionais (só números)
+  // Contatos adicionais
   btnAddContact.addEventListener("click",()=> addContact({tipo:"Telefone",valor:"",obs:""}));
   function addContact(c){ contacts.push(c); renderContacts(); }
   function removeContact(i){ contacts.splice(i,1); renderContacts(); }
@@ -395,9 +424,7 @@
       medList.appendChild(div);
     });
     medList.querySelectorAll("input").forEach(el=>{
-      el.addEventListener("input",ev=>{
-        const idx=+ev.target.dataset.i; meds[idx]=ev.target.value;
-      });
+      el.addEventListener("input",ev=>{ const idx=+ev.target.dataset.i; meds[idx]=ev.target.value; });
     });
     medList.querySelectorAll("[data-act='rmmed']").forEach(btn=>{
       btn.addEventListener("click",ev=>{ const idx=+ev.target.dataset.i; removeMed(idx); });
@@ -414,7 +441,7 @@
       $("#logradouro").value=data.logradouro||""; $("#bairro").value=data.bairro||"";
       $("#cidade").value=data.localidade||""; $("#uf").value=(data.uf||"");
       if(!$("#complemento").value && data.complemento) $("#complemento").value=data.complemento;
-      help.textContent="Endereço preenchido. Edite apenas número e complemento se necessário.";
+      help.textContent="Endereço preenchido. Edite apenas número e complemento.";
       $("#numero").focus();
     }catch(e){ help.textContent="Erro ao consultar ViaCEP."; console.error(e); }
   }
@@ -457,6 +484,8 @@
       tagEncontrados.textContent=hits.length===1?"1 resultado":`${hits.length} resultados (mostrando o 1º)`;
       preencherFormulario(record); bloco.classList.remove("hide");
       status.textContent="Dados carregados. Revise e complete.";
+      // rola para o início do bloco de dados no mobile
+      bloco.scrollIntoView({block:'start', behavior:'smooth'});
     }catch(e){ console.error(e); status.textContent="Erro: "+e.message; }
     finally{ status.classList.remove("loading"); }
   }
@@ -466,13 +495,11 @@
     $("#aluno").value=v(MAP.ALUNO) ?? "";
     $("#turma").value=v(MAP.TURMA) ?? "";
 
-    // contatos da base (só números)
     contacts=[];
     const tel1=(v(MAP.TEL1) ?? "").toString(), tel2=(v(MAP.TEL2) ?? "").toString();
     const push=(s)=>{ const parts=s.includes("/")?s.split("/"):[s]; parts.map(p=>onlyDigits(p)).filter(Boolean).forEach(d=>contacts.push({tipo:"Telefone",valor:d,obs:""})); };
     if(tel1) push(tel1); if(tel2) push(tel2); renderContacts();
 
-    // zera seções condicionais
     f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
     f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
     f.temAlergia.value="nao"; f.alergiaDesc.value=""; f.alergiaDesc.disabled=true;
@@ -481,17 +508,18 @@
   }
 
   btnBuscar.addEventListener("click",doBuscar);
-  btnLimpar.addEventListener("click",()=>{ 
+  btnLimpar.addEventListener("click",()=>{
     cpfInput.value=""; status.textContent=""; bloco.classList.add("hide"); record=null;
     contacts=[]; meds=[]; renderContacts(); renderMeds();
     f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
     f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
   });
-  btnCancelar.addEventListener("click",()=>{ 
+  btnCancelar.addEventListener("click",()=>{
     bloco.classList.add("hide"); statusEnvio.textContent=""; record=null;
     contacts=[]; meds=[]; renderContacts(); renderMeds();
     f.bolsaFamilia.value="nao"; f.nis.value=""; f.nis.disabled=true;
     f.usaTransporte.value="nao"; f.nomeTransporte.value=""; f.nomeTransporte.disabled=true;
+    window.scrollTo({top:0,behavior:'smooth'});
   });
 
   btnEnviar.addEventListener("click",async ()=>{
@@ -505,14 +533,11 @@
     if(!$("#aluno").value.trim()) return statusEnvio.textContent="Aluno não localizado na base.";
     if(!onlyDigits($("#cep").value) || onlyDigits($("#cep").value).length!==8) return statusEnvio.textContent="CEP inválido (8 dígitos).";
     if(!$("#logradouro").value.trim() || !$("#bairro").value.trim() || !$("#cidade").value.trim() || !$("#uf").value.trim()) return statusEnvio.textContent="Complete o endereço (logradouro, bairro, cidade, UF).";
-    // Benefícios
     if($("#bolsaFamilia").value==="sim"){
       const nisD=onlyDigits($("#nis").value);
       if(nisD.length!==11) return statusEnvio.textContent="Informe um NIS válido com 11 dígitos.";
     }
-    // Transporte
     if(f.usaTransporte.value==="sim" && !f.nomeTransporte.value.trim()) return statusEnvio.textContent="Informe o nome do transporte escolar.";
-    // Saúde mínimos
     if($("#temAlergia").value==="sim" && !$("#alergiaDesc").value.trim()) return statusEnvio.textContent="Descreva as alergias.";
     if($("#temIntolerancia").value==="sim" && !$("#intoleranciaDesc").value.trim()) return statusEnvio.textContent="Descreva a intolerância alimentar.";
     if($("#usaMedic").value==="sim" && meds.filter(n=>n.trim()).length===0) return statusEnvio.textContent="Informe ao menos um medicamento.";
@@ -552,29 +577,35 @@
         nome: f.usaTransporte.value==="sim" ? f.nomeTransporte.value.trim() : ""
       },
       saude:{
-        alergias:{ tem: $("#temAlergia").value==="sim", detalhes: $("#alergiaDesc").value.trim() },
-        intolerancia_alimentar:{ tem: $("#temIntolerancia").value==="sim", detalhes: $("#intoleranciaDesc").value.trim() },
+        alergias:{ tem: $("#temAlergia").value==="sim", detalhes: $("#temAlergia").value==="sim" ? $("#alergiaDesc").value.trim() : "" },
+        intolerancia_alimentar:{ tem: $("#temIntolerancia").value==="sim", detalhes: $("#temIntolerancia").value==="sim" ? $("#intoleranciaDesc").value.trim() : "" },
         medicamentos:{ usa: $("#usaMedic").value==="sim", lista: medsClean }
       },
       observacoes:$("#observacoes").value.trim(),
       timestamp:new Date().toISOString()
     };
 
-    if(!SUBMIT_URL){
-      console.log("Payload de renovação:",payload);
-      statusEnvio.textContent="Pré-visualização concluída (sem envio configurado). Defina SUBMIT_URL para registrar.";
-      return;
-    }
     try{
       statusEnvio.textContent="Enviando...";
-      const r=await fetch(SUBMIT_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-      if(!r.ok) throw new Error("Falha no envio: "+r.status);
-      await r.json().catch(()=> ({}));
+      // Opção 2: x-www-form-urlencoded
+      const r = await fetch(SUBMIT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams({ payload: JSON.stringify(payload) }).toString()
+      });
+
+      const ok = r.ok;
+      const data = await r.json().catch(()=> ({}));
+      if(!ok || data.ok===false) throw new Error(data.error || `Falha no envio: ${r.status}`);
       statusEnvio.textContent="Renovação registrada com sucesso.";
-    }catch(e){ console.error(e); statusEnvio.textContent="Erro no envio: "+e.message; }
+      // opcional: limpar
+      // btnLimpar.click();
+    }catch(e){
+      console.error(e);
+      statusEnvio.textContent="Erro no envio: "+e.message;
+    }
   });
 
-  // Suporte a ?cpf=
   (function initFromQuery(){
     const u=new URL(location.href); const qcpf=u.searchParams.get("cpf");
     if(qcpf){ cpfInput.value=maskCPF(qcpf); if(onlyDigits(qcpf).length>=8) doBuscar(); }
