@@ -118,12 +118,18 @@
   .primary:active,.ghost:active,.ok:active,.danger:active{transform:translateY(0)}
 
   /* Barra fixa no mobile melhorada */
-  .sticky-actions{
+  .sticky-actions{*/
     position:sticky; bottom:0; left:0; right:0; z-index:10;
     padding:12px 0 calc(12px + var(--safe-b));
     background:linear-gradient(180deg, rgba(255,255,255,0) 0%, color-mix(in srgb, var(--card) 92%, transparent) 40%, var(--card) 100%);
     border-top:1px solid var(--line);
-    margin:12px -6px -10px -6px;
+    margin:12px -6px -10px -6px;*/
+                   position: static !important;
+    padding: 12px 0;
+    background: transparent;
+    border-top: none;
+    margin: 20px 0 0 0;
+                  
   }
 
   /* Inputs mais "calmos" no iOS */
@@ -1014,4 +1020,5 @@ window.scrollTo({ top: 0, behavior: "smooth" });
   </script>
 </body>
 </html>
+
 
